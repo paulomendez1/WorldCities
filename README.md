@@ -13,4 +13,5 @@ ORM: Entity Framework
 
 Preview:
 
-![Ventas](https://user-images.githubusercontent.com/85239081/123356427-16ac2080-d53e-11eb-857a-0b6c09c73906.jpg)
+![WorldCities](https://user-images.githubusercontent.com/85239081/137484297-772905ab-7f51-4baa-a779-d576e2cee1a1.PNG)
+
