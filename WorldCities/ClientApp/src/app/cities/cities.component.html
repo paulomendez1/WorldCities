@@ -1,11 +1,6 @@
 <h1>Cities</h1>
 <p>Here's a list of cities: feel free to play with it.</p>
 <p *ngIf="!cities"><em>Loading...</em></p>
-<div class="commands text-right" *ngIf="cities">
-    <button type="submit" [routerLink]="['/city']" class="btn btn-success">
-        Add a new City
-    </button>
-</div>
 <mat-form-field [hidden]="!cities">
     <input matInput (keyup)="onFilterTextChanged($event.target.value)" placeholder="Filter by name (or part of it)...">
 </mat-form-field>
@@ -40,9 +35,26 @@
             <a [routerLink]="['/country',city.countryId]">{{city.countryName}}</a>
         </td>
     </ng-container>
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete Country</th>
+        <td mat-cell *matCellDef="let city">
+            <button type="submit" class="btn btn-danger" (click)="Delete(city.id)" *ngIf="isAuthenticated | async">
+                <i class="fas fa-trash">Delete</i>
+            </button>
+            <button type="submit" class="btn btn-danger" (click)="Delete(city.id)" *ngIf="!(isAuthenticated | async)" disabled tabindex="0" data-toggle="tooltip" data-placement="top" title="Login to delete cities">
+                <i class="fas fa-trash">Delete</i>
+            </button>
+        </td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;">
 </table>
 <!-- Pagination directive -->
 <mat-paginator [hidden]="!cities" (page)="getData($event)" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
     showFirstLastButtons></mat-paginator>
+<div class="commands text-left" *ngIf="cities">
+    <button type="submit" [routerLink]="['/city']" class="btn btn-dark">
+        Add a new City
+    </button>
+</div>

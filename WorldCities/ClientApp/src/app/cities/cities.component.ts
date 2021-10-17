@@ -8,14 +8,18 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { City } from './city';
 import { CityService } from './city.service';
 import { ApiResult } from '../base.service';
+import { BaseFormComponent } from '../base.form.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthorizeService } from '../../api-authorization/authorize.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-cities',
     templateUrl: './cities.component.html',
     styleUrls: ['./cities.component.css']
 })
-export class CitiesComponent implements OnInit {
-    public displayedColumns: string[] = ['id', 'name', 'lat', 'lon', 'countryName']
+export class CitiesComponent extends BaseFormComponent implements OnInit {
+    public displayedColumns: string[] = ['id', 'name', 'lat', 'lon', 'countryName', 'delete']
     public cities: MatTableDataSource<City>;
     defaultPageIndex: number = 0;
     defaultPageSize: number = 10;
@@ -26,11 +30,15 @@ export class CitiesComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
     filterTextChanged: Subject<string> = new Subject<string>();
+    public isAuthenticated: Observable<boolean>;
     constructor(
-        private cityService: CityService) {
-    }
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private authorizeService: AuthorizeService,
+        private cityService: CityService) { super(); }
     ngOnInit() {
         this.loadData();
+        this.isAuthenticated = this.authorizeService.isAuthenticated();
     }
     // debounce filter text changes
     onFilterTextChanged(filterText: string) {
@@ -79,5 +87,18 @@ export class CitiesComponent implements OnInit {
                 this.paginator.pageSize = result.pageSize;
                 this.cities = new MatTableDataSource<City>(result.data);
             }, error => console.error(error));
+    }
+    Delete(id: number) {
+        if (confirm("Are you sure?")) {
+            this.cityService
+                .delete<City>(id)
+                .subscribe(result => {
+                    console.log("City " + id + " has been deleted.");
+                    this.router.navigate(['/cities']);
+                    this.loadData();
+                    window.alert("The city has been eliminated!")
+                }, error => console.error(error));
+
+        }
     }
 }

@@ -16,6 +16,7 @@ export abstract class BaseService {
     abstract get<T>(id: number): Observable<T>;
     abstract put<T>(item: T): Observable<T>;
     abstract post<T>(item: T): Observable<T>;
+    abstract delete<T>(item: T): Observable<T>;
 }
 export interface ApiResult<T> {
     data: T[];

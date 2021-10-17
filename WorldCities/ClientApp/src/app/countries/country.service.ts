@@ -54,4 +54,8 @@ export class CountryService
         var url = this.baseUrl + "api/Countries/IsDupeField";
         return this.http.post<boolean>(url, null, { params });
     }
+    delete<Country>(item): Observable<Country> {
+        var url = this.baseUrl + "api/Countries";
+        return this.http.post<Country>(url, item);
+    }
 }

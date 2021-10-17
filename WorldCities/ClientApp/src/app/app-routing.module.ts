@@ -29,6 +29,11 @@ const routes: Routes = [
     canActivate: [AuthorizeGuard]
   },
   {
+    path: 'cities/:id',
+    component: CitiesComponent,
+    canActivate: [AuthorizeGuard]
+  },
+  {
     path: 'countries',
     component: CountriesComponent
   },

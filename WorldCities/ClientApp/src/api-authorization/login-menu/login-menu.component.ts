@@ -11,6 +11,7 @@ import { map, tap } from 'rxjs/operators';
 export class LoginMenuComponent implements OnInit {
   public isAuthenticated: Observable<boolean>;
   public userName: Observable<string>;
+  isExpanded = false;
 
   constructor(private authorizeService: AuthorizeService) { }
 
@@ -18,4 +19,13 @@ export class LoginMenuComponent implements OnInit {
     this.isAuthenticated = this.authorizeService.isAuthenticated();
     this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
   }
+
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
 }
+
