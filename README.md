@@ -1,11 +1,12 @@
-A World Cities/Countries PWA, with Login, CRUD & Unit Testing 
+A World Cities/Countries PWA
 -
+A World Cities/Countries PWA with Security (Login, Roles, etc), CRUD & Unit Testing 
 
 IDE: Visual Studio 2019
 
-Front-End: Angular 12
+Front-End: Angular 12 
 
-Back-End: ASP.NET Core 5
+Back-End: .NET 5.0 API
 
 DB: SQL Server 2017 (Included in repository)
 
